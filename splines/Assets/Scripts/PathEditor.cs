@@ -12,7 +12,21 @@ public class PathEditor : Editor
 
     void OnSceneGUI()
     {
+        Input();
         Draw();
+    }
+
+    void Input()
+    {
+        Event guiEvent = Event.current;
+
+        Vector3 mousepos = HandleUtility.GUIPointToWorldRay(guiEvent.mousePosition).origin;
+
+        if (guiEvent.type == EventType.MouseDown && guiEvent.button == 0 && guiEvent.shift)
+        {
+            Undo.RecordObject(creator, "Add Segment");
+            path.AddSegment(mousepos);
+        }
     }
 
     void Draw()
